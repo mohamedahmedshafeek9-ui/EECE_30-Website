@@ -143,15 +143,40 @@ body{margin:0;min-height:100%;font-family:Tahoma,"Segoe UI",Verdana,sans-serif;f
 // ✏️ Put your real page links in "url".
 const LINKS = [
   {n:"Timetable", g:"", c:"", url:"#", act:"tt"},
+  {n:"Drive Folder", g:"", c:"", url:"https://drive.google.com/drive/folders/1BnABwki4_eeAaLGJd6rfrhcHBbhJ29lL"},
   {n:"Facebook",  g:"f",  c:"#1877f2", url:"https://www.facebook.com/share/1DGRLFvW83/"},
   {n:"TikTok",    g:"♪",  c:"#111111", url:"https://www.tiktok.com/@eece.30?_r=1&_t=ZS-9BHw8OzHhjx"},
   {n:"Instagram", g:"◎",  c:"linear-gradient(45deg,#f9a03f,#e1306c 55%,#833ab4)", url:"https://www.instagram.com/eece_30?srtk=MTEwNGFxNDljYzVuZg=="},
   {n:"YouTube",   g:"▶",  c:"#e00000", url:"https://youtube.com/@eece30?si=hVENfFMaH10TbtGO"},
-  {n:"Discord",   g:"#",  c:"#5865f2", url:"#", soon:true}
+  {n:"Discord",   g:"#",  c:"#5865f2", url:"#", soon:true},
+  {n:"Dino Game", g:"", c:"", url:"#", act:"dino"}
 ];
 const TT = 'M17.5 6h3.6c.3 2.6 1.9 4.2 4.4 4.5v3.7c-1.6 0-3.1-.5-4.4-1.4v6.2c0 3.8-3 6.7-6.8 6.7s-6.5-2.9-6.5-6.4 3-6.5 6.6-6.5c.4 0 .7 0 1.1.1v3.8c-.3-.1-.6-.1-.9-.1-1.4 0-2.5 1.1-2.5 2.5s1.1 2.5 2.5 2.5 2.6-1.1 2.6-2.8z';
 const FR = (c) => '<rect x="2.5" y="2.5" width="27" height="27" fill="' + c + '" stroke="#000"/><path d="M3 29V3h26" fill="none" stroke="#fff" opacity=".55"/><path d="M29 3v26H3" fill="none" stroke="#000" opacity=".3"/>';
+const DINO_BODY = [
+  '.............#######.',
+  '............##.######',
+  '............#########',
+  '............#########',
+  '............####.....',
+  '............########.',
+  '#...........######...',
+  '#..........########..',
+  '##........##########.',
+  '###......############',
+  '####....#############',
+  '.###################.',
+  '..#################..',
+  '...###############...',
+  '....#############....',
+  '.....###########.....'
+];
+const LEGS_A = ['......###....###.....', '......###....#.......', '......##.....###.....'];
+const LEGS_B = ['......###....###.....', '......#.....###......', '......###....##......'];
+const DINO_SVG = '<g fill="#535353">' + DINO_BODY.concat(LEGS_A).map((r, j) => [...r].map((ch, i) => ch === '#' ? '<rect x="' + (i + 5.5) + '" y="' + (j + 7) + '" width="1" height="1"/>' : '').join('')).join('') + '</g><rect x="3" y="26.500" width="26" height="1" fill="#535353"/>';
 const ICONS = {
+  "Drive Folder": '<path d="M3.500 8.500h9l3 3h13v16h-25z" fill="#f4c542" stroke="#000"/><path d="M4 14.500h24" stroke="#fff" opacity=".6" fill="none"/><path d="M16 17l5 8.500h-10z" fill="#1e8e3e" stroke="#000"/><path d="M16 17l-5 8.500" stroke="#1a73e8" stroke-width="1.500" fill="none"/>',
+  "Dino Game": FR('#f7f7f7') + DINO_SVG,
   "Timetable": '<rect x="3.500" y="5.500" width="25" height="23" fill="#fff" stroke="#000"/><rect x="3.500" y="5.500" width="25" height="6" fill="#d82020" stroke="#000"/><path d="M4 17h24M4 23h24M12 12v16M20 12v16" stroke="#8a8a8a" fill="none"/><rect x="13" y="18" width="6" height="5" fill="#316ac5"/><path d="M9 3v5M23 3v5" stroke="#000" stroke-width="2"/>',
   "Facebook": FR('#3b5998') + '<path d="M17 27V17h3.5l.6-4H17v-2.2c0-1.2.4-2 2-2h2V5.3C20.7 5.2 19.6 5 18.3 5 15.4 5 13 6.8 13 10.4V13H9.5v4H13v10z" fill="#fff"/>',
   "TikTok": FR('#111') + '<path d="' + TT + '" fill="#25f4ee" transform="translate(-1 -1)"/><path d="' + TT + '" fill="#fe2c55" transform="translate(1 1)"/><path d="' + TT + '" fill="#fff"/>',
@@ -269,6 +294,90 @@ function openVideo(){
 function openAbout(){
   panel('About EECE 30', '<p><b>EECE 30 – Official Pages</b></p><p>All of our pages in one place: Facebook, TikTok, Instagram and YouTube. Discord is coming soon.</p><p>Use Favorites for subject info, and View for the timetable.</p>');
 }
+const DRIVE = 'https://drive.google.com/drive/folders/1BnABwki4_eeAaLGJd6rfrhcHBbhJ29lL';
+let gameJump = null;
+document.addEventListener('keydown', e => { if (gameJump && (e.code === 'Space' || e.code === 'ArrowUp')) { e.preventDefault(); gameJump(); } });
+function openGame(){
+  const mobile = window.innerWidth < 640;
+  const W = mobile ? 360 : 600, H = mobile ? 320 : 200, GY = H - 34, S = 2, INK = '#535353';
+  panel('Dino Run', '<canvas id="gc" width="' + W + '" height="' + H + '" style="width:100%;display:block;background:#f7f7f7;border:2px inset #fff;touch-action:none" aria-label="Dino game"></canvas><p class="note">Press Space or tap the game to jump. It gets faster and harder as you score: bigger cactus groups, then birds at different heights.</p>');
+  const cv = document.getElementById('gc'), c = cv.getContext('2d');
+  const clouds = [{ x: 60, y: 50, w: 44 }, { x: 230, y: 90, w: 34 }, { x: 390, y: 40, w: 50 }];
+  let state = 'ready', frame = 0, scroll = 0, speed = 5, y = 0, vy = 0, obs = [], next = 300, score = 0, hi = 0, last = 0;
+  try { hi = +localStorage.getItem('eece30hi') || 0; } catch (e) {}
+  const pad = n => String(n).padStart(5, '0');
+  function reset(){ frame = 0; scroll = 0; speed = 5; y = 0; vy = 0; obs = []; next = 300; score = 0; }
+  function jump(){
+    if (state === 'over') { reset(); state = 'run'; return; }
+    if (state === 'ready') state = 'run';
+    if (y === 0) vy = -11.5;
+  }
+  gameJump = jump;
+  cv.addEventListener('pointerdown', e => { e.preventDefault(); jump(); });
+  const alive = () => document.getElementById('gc') === cv && !pw.classList.contains('hide');
+  function bits(rows, x, ty){ rows.forEach((r, j) => { for (let i = 0; i < r.length; i++) if (r[i] === '#') c.fillRect(x + i * S, ty + j * S, S, S); }); }
+  function spawn(){
+    const bird = score > 120 && Math.random() < Math.min(0.45, 0.15 + score / 1500);
+    if (bird) {
+      const bot = Math.random() < 0.5 ? GY - 12 : GY - 48;
+      obs.push({ type: 'bird', x: W + 10, w: 28, top: bot - 16, bot: bot, v: 1.5 });
+    } else {
+      const n = score > 300 && Math.random() < 0.4 ? 3 : (score > 100 && Math.random() < 0.45 ? 2 : 1);
+      for (let k = 0; k < n; k++) {
+        const h = 30 + Math.floor(Math.random() * 22);
+        obs.push({ type: 'cactus', x: W + 10 + k * 22, w: 18, top: GY - h, bot: GY, v: 0 });
+      }
+    }
+    next = 150 + speed * 14 + Math.random() * 200;
+  }
+  function update(dt){
+    if (state !== 'run') return;
+    frame += dt; scroll += speed * dt; speed = Math.min(16, 5 + frame / 300);
+    vy += 0.65 * dt; y += vy * dt; if (y >= 0) { y = 0; vy = 0; }
+    next -= speed * dt; if (next <= 0) spawn();
+    obs.forEach(o => o.x -= (speed + o.v) * dt); obs = obs.filter(o => o.x > -40);
+    score = Math.floor(frame / 6);
+    const dx = 46, dw = 30, dy = GY - 36 + y, dh = 34;
+    for (const o of obs) {
+      if (dx < o.x + o.w - 2 && dx + dw > o.x + 2 && dy + dh > o.top && dy < o.bot) {
+        state = 'over';
+        if (score > hi) { hi = score; try { localStorage.setItem('eece30hi', String(hi)); } catch (e) {} }
+      }
+    }
+  }
+  function draw(){
+    c.clearRect(0, 0, W, H);
+    c.fillStyle = '#d0d0d0';
+    clouds.forEach(k => { const m = W + 80, x = (((k.x - scroll * 0.15) % m) + m) % m - 40; c.fillRect(x, k.y, k.w, 8); c.fillRect(x + 8, k.y - 6, k.w - 18, 6); });
+    c.fillStyle = INK;
+    c.fillRect(0, GY, W, 1);
+    for (let i = 0; i < 9; i++) c.fillRect((((i * 83 - scroll) % W) + W) % W, GY + 6 + (i % 3) * 4, 4 + (i % 2) * 3, 1);
+    obs.forEach(o => {
+      const x = o.x, t = o.top;
+      if (o.type === 'bird') {
+        c.fillRect(x + 6, t + 5, 18, 6); c.fillRect(x, t + 6, 6, 3); c.fillRect(x + 24, t + 7, 4, 3);
+        if (Math.floor(frame / 8) % 2) c.fillRect(x + 10, t - 2, 6, 7); else c.fillRect(x + 10, t + 11, 6, 7);
+      } else {
+        const h = o.bot - o.top;
+        c.fillRect(x + 5, t, 8, h); c.fillRect(x, t + 14, 6, 4); c.fillRect(x, t + 8, 3, 10); c.fillRect(x + 13, t + 18, 5, 4); c.fillRect(x + 15, t + 12, 3, 10);
+      }
+    });
+    const legs = (state === 'run' && y === 0 && Math.floor(frame / 6) % 2) ? LEGS_B : LEGS_A;
+    bits(DINO_BODY, 40, GY - 38 + y); bits(legs, 40, GY - 38 + y + DINO_BODY.length * S);
+    c.font = '16px "Courier New", monospace'; c.textAlign = 'right';
+    c.fillText('HI ' + pad(hi) + '  ' + pad(score), W - 10, 24);
+    c.textAlign = 'left'; c.fillText('LV ' + (Math.floor(score / 100) + 1), 10, 24);
+    c.textAlign = 'center';
+    if (state === 'ready') c.fillText('Press Space or tap to start', W / 2, H * 0.35);
+    if (state === 'over') { c.font = 'bold 20px "Courier New", monospace'; c.fillText('G A M E   O V E R', W / 2, H * 0.3); c.font = '14px "Courier New", monospace'; c.fillText('Press Space or tap to restart', W / 2, H * 0.3 + 26); }
+  }
+  function tick(t){
+    if (!alive()) { if (gameJump === jump) gameJump = null; return; }
+    const dt = Math.min(3, (t - last) / 16.667 || 1); last = t;
+    update(dt); draw(); requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
 function copyText(t, m){
   const bad = () => show('EECE 30', 'Could not copy. Copy it manually instead.', '!');
   if (!navigator.clipboard) return bad();
@@ -285,6 +394,8 @@ const each = f => [...list.children].forEach(f);
 const MENUS = {
   File: () => [
     ['Open Timetable in Google Sheets', null, SHEET],
+    ['Open Drive Folder', null, DRIVE],
+    ['Play Dino Game', () => openGame()],
     ['Copy Page Link', () => copyText(location.href, 'Page link copied.')],
     ['Print…', () => window.print()], '-',
     ['Close', () => show('Midterms', 'Task failed successfully.', '✕')]
@@ -328,7 +439,8 @@ bar.addEventListener('click', e => {
   if (over > 0) dd.style.left = Math.max(0, b.offsetLeft - over) + 'px';
 });
 document.addEventListener('click', e => { if (!e.target.closest('#menubar')) closeDD(); });
-LINKS.forEach((l,k) => { if (l.act === 'tt') [list.children[k], sml.children[k]].forEach(el => { el.removeAttribute('target'); el.addEventListener('click', ev => { ev.preventDefault(); openTimetable(); }); }); });
+const ACTS = { tt: () => openTimetable(), dino: () => openGame() };
+LINKS.forEach((l,k) => { if (ACTS[l.act]) [list.children[k], sml.children[k]].forEach(el => { el.removeAttribute('target'); el.addEventListener('click', ev => { ev.preventDefault(); ACTS[l.act](); }); }); });
 document.getElementById('ttq').onclick = e => { e.preventDefault(); openTimetable(); };
 </script>
 </body>
