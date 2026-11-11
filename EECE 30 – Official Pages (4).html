@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EECE 30 – Official Pages</title>
+<style>
+:root{
+  --sky1:#2d6fd6;--sky2:#8fc3f5;--hill1:#6fb83a;--hill2:#2f7a1c;
+  --face:#ece9d8;--ink:#000;--sel:#316ac5;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky1:#2d6fd6}}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;font-family:Tahoma,"Segoe UI",Verdana,sans-serif;font-size:13px;color:var(--ink);
+  background:
+   radial-gradient(130% 55% at 30% 112%,var(--hill1) 0 55%,transparent 56%),
+   radial-gradient(120% 45% at 95% 118%,var(--hill2) 0 60%,transparent 61%),
+   radial-gradient(60% 18% at 25% 38%,rgba(255,255,255,.85),transparent 70%),
+   radial-gradient(50% 14% at 75% 26%,rgba(255,255,255,.7),transparent 70%),
+   linear-gradient(var(--sky1),var(--sky2) 70%);
+  background-attachment:fixed}
+.desktop{padding:20px 12px calc(60px + env(safe-area-inset-bottom,0px))}
+.win{background:#0054e3;border-radius:9px 9px 0 0;padding:0 3px 3px;
+  box-shadow:0 0 0 1px #0831d9,4px 6px 14px rgba(0,0,0,.45)}
+.bar{display:flex;align-items:center;gap:6px;height:30px;padding:0 5px 0 8px;border-radius:8px 8px 0 0;color:#fff;
+  font:700 14px "Trebuchet MS",Tahoma,sans-serif;text-shadow:1px 1px #0f1089;
+  background:linear-gradient(#0997ff,#0053ee 8%,#0050ee 40%,#06f 88%,#06f 93%,#005bff 95%,#003dd7)}
+.bar .t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .ico{width:16px;height:16px;border-radius:3px;background:linear-gradient(#fff,#9cc4ff);flex:none}
+.btn{width:22px;height:22px;border:1px solid #fff;border-radius:4px;color:#fff;font:700 12px/1 Tahoma;cursor:pointer;padding:0;
+  background:radial-gradient(circle at 30% 25%,#78a8ff,#2563e6 70%)}
+.btn.c{background:radial-gradient(circle at 30% 25%,#f3a58a,#d8421c 70%)}
+.btn:focus-visible,.item:focus-visible,.ok:focus-visible,.start:focus-visible{outline:1px dotted #000;outline-offset:1px}
+.menu{position:relative;background:var(--face);border-bottom:1px solid #aca899;padding:2px 4px;display:flex;gap:2px}
+.menu button{font:13px Tahoma;background:none;border:0;padding:2px 8px;color:#000;cursor:pointer}
+.menu button:hover,.menu button[aria-expanded="true"]{background:var(--sel);color:#fff}
+.dd{position:absolute;z-index:25;background:#fff;border:1px solid #aca899;box-shadow:3px 3px 3px rgba(0,0,0,.4);padding:2px;min-width:200px;max-width:min(340px,86vw)}
+.dd button{display:block;width:100%;text-align:left;white-space:normal;padding:5px 22px 5px 24px;background:none;border:0;font:13px Tahoma;color:#000;cursor:pointer}
+.dd button:hover,.dd button:focus{background:var(--sel);color:#fff}
+.dd hr{border:0;border-top:1px solid #aca899;margin:3px 2px}
+.dd a{display:block;padding:5px 22px 5px 24px;color:#000;text-decoration:none;font:13px Tahoma}
+.dd a:hover,.dd a:focus{background:var(--sel);color:#fff}
+.addr{background:var(--face);display:flex;align-items:center;gap:6px;padding:4px 8px;border-bottom:1px solid #aca899}
+.addr b{font-weight:400;color:#555}
+.addr div{flex:1;background:#fff;border:1px solid #7f9db9;padding:2px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.main{display:flex;background:#fff;min-height:300px}
+.pane{width:200px;flex:none;padding:12px 10px;background:linear-gradient(#7ba2e7,#6375d6)}
+.card{border-radius:6px 6px 0 0;overflow:hidden;margin-bottom:12px;background:#d6dff7}
+.card h3{margin:0;padding:5px 10px;font-size:12px;color:#fff;background:linear-gradient(90deg,#0c3caa,#4a83f0)}
+.card h3.g{color:#1e3c9b;background:linear-gradient(90deg,#fff,#c6d3f7)}
+.card p{margin:0;padding:8px 10px;color:#1e3c9b;line-height:1.4}
+.list{flex:1;padding:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;align-content:start}
+.item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 4px;text-align:center;text-decoration:none;color:#000;border:1px solid transparent}
+.item .i{width:44px;height:44px;display:block;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.35))}.item .i svg,.sm a i svg{width:100%;height:100%;display:block}
+.item span.l{padding:1px 3px;line-height:1.25}
+.item:hover span.l,.item:focus span.l{background:var(--sel);color:#fff}
+.status{background:var(--face);border-top:1px solid #aca899;padding:3px 8px;display:flex;justify-content:space-between}
+.dlg{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%);width:min(380px,92vw);z-index:20}
+.dlg.hide{display:none}
+.dlg .body{background:var(--face);padding:20px 16px 14px}
+.dlg .row{display:flex;align-items:center;gap:14px;font-size:15px}
+.err{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font:700 22px Tahoma;
+  background:radial-gradient(circle at 35% 30%,#ff8a8a,#e5141a 60%);box-shadow:inset 0 -2px 4px rgba(0,0,0,.3)}
+.ok{display:block;margin:18px auto 0;min-width:78px;padding:4px 12px;font:13px Tahoma;color:#000;cursor:pointer;
+  background:linear-gradient(#fff,#ecebe5 85%,#d6d0c5);border:1px solid #003c74;border-radius:3px}
+.ok:active{background:#d6d0c5}
+.tb{position:fixed;left:0;right:0;bottom:0;z-index:30;height:calc(32px + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);
+  display:flex;align-items:stretch;
+  background:linear-gradient(#245edb,#3f8cf3 9%,#245edb 18%,#245edb 92%,#1941a5)}
+.start{border:0;padding:0 22px 0 12px;color:#fff;cursor:pointer;font:italic 700 20px "Trebuchet MS",Tahoma,sans-serif;text-shadow:1px 1px 2px #1b4d12;
+  border-radius:0 14px 14px 0;box-shadow:inset 0 2px 3px rgba(255,255,255,.5),2px 0 4px rgba(0,0,0,.4);
+  background:linear-gradient(#5fb85a,#3a9a35 15%,#2f8a2c 85%,#256b22);display:flex;align-items:center;gap:6px}
+.task{margin:3px 6px;padding:0 12px;display:flex;align-items:center;color:#fff;border-radius:3px;min-width:0;max-width:200px;
+  background:linear-gradient(#1e52c4,#3c7bec);box-shadow:inset 1px 1px 2px rgba(0,0,0,.4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tray{margin-left:auto;padding:0 12px;display:flex;align-items:center;color:#fff;border-left:1px solid #0b3f9e;
+  background:linear-gradient(#0f8ae8,#1290e9 50%,#0b77d6)}
+.sm{position:fixed;left:0;bottom:calc(32px + env(safe-area-inset-bottom,0px));z-index:29;width:min(260px,90vw);border-radius:8px 8px 0 0;overflow:hidden;
+  box-shadow:3px -3px 10px rgba(0,0,0,.45);background:#fff;border:2px solid #1d54c8}
+.sm.hide{display:none}
+.sm header{padding:10px;color:#fff;font:700 16px "Trebuchet MS",Tahoma;background:linear-gradient(#1c60d8,#3d8af5)}
+.sm a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#000;text-decoration:none}
+.sm a:hover,.sm a:focus{background:var(--sel);color:#fff}
+.sm a i{width:22px;height:22px;display:block}
+.list.small{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}.list.small .item .i{width:28px;height:28px}
+.list.det{grid-template-columns:1fr;gap:2px}.list.det .item{flex-direction:row;gap:10px;padding:4px 8px;text-align:left}.list.det .item .i{width:24px;height:24px}
+.item.sel span.l{background:var(--sel);color:#fff}
+.status.off{display:none}
+.dlg.wide{width:min(580px,94vw)}#pw{z-index:19}
+.pbody{max-height:62vh;overflow:auto}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button{font:12px Tahoma;padding:3px 10px;border:1px solid #919b9c;border-radius:3px 3px 0 0;background:#f4f3ee;color:#000;cursor:pointer}
+.tabs button:hover{background:#fff8e1}
+.tabs button.on{background:#fff;color:#000;font-weight:700;border-top:2px solid #f7a528}
+.tt{width:100%;border-collapse:collapse;background:#fff;font-size:12.5px}
+.tt td,.tt th{border:1px solid #d4d0c8;padding:4px 6px;text-align:left;vertical-align:top}
+.tt th{background:var(--face)}
+.note{font-size:12px;color:#444;margin:8px 0 0;line-height:1.4}
+.plink{display:inline-block;margin-top:8px;color:#0000ee}
+.pbody p{margin:0 0 8px;line-height:1.45}
+@media (min-width:640px){.desktop{display:flex;justify-content:center;padding-top:40px}#main{width:640px}}
+@media (max-width:560px){.main{flex-direction:column}.pane{width:auto}}
+</style>
+</head>
+<body>
+<div class="desktop">
+  <section class="win" id="main" aria-label="EECE 30 pages">
+    <div class="bar"><span class="ico"></span><span class="t">EECE 30 – Official Pages</span>
+      <button class="btn" aria-label="Minimize">–</button><button class="btn" aria-label="Maximize">□</button><button class="btn c" id="close" aria-label="Close">✕</button></div>
+    <div class="menu" id="menubar"><button data-m="File" aria-expanded="false"><u>F</u>ile</button><button data-m="Edit" aria-expanded="false"><u>E</u>dit</button><button data-m="View" aria-expanded="false"><u>V</u>iew</button><button data-m="Favorites" aria-expanded="false">F<u>a</u>vorites</button><button data-m="Help" aria-expanded="false"><u>H</u>elp</button></div>
+    <div class="addr"><b>Address</b><div>C:\EECE30\Social Media</div></div>
+    <div class="main">
+      <aside class="pane">
+        <div class="card"><h3>Link Tasks</h3><p>Click any icon to open the page in a new tab.</p></div>
+        <div class="card"><h3>Timetable</h3><p><a href="#" id="ttq" style="color:#1e3c9b">Open my timetable</a></p></div>
+        <div class="card"><h3 class="g">Details</h3><p><b>EECE 30</b><br>Cairo University<br>Faculty of Engineering</p></div>
+      </aside>
+      <div class="list" id="list"></div>
+    </div>
+    <div class="status"><span id="count"></span><span>My Computer</span></div>
+  </section>
+</div>
+
+<section class="win dlg" id="dlg" role="alertdialog" aria-label="Midterms">
+  <div class="bar"><span class="t" id="dt">Midterms</span><button class="btn c" data-ok aria-label="Close">✕</button></div>
+  <div class="body"><div class="row"><div class="err" id="de">✕</div><div id="dm">Task failed successfully.</div></div>
+    <button class="ok" data-ok><u>O</u>K</button></div>
+</section>
+
+<section class="win dlg wide hide" id="pw" role="dialog" aria-label="Window">
+  <div class="bar"><span class="t" id="pt"></span><button class="btn c" id="pclose" aria-label="Close">✕</button></div>
+  <div class="body pbody" id="pb"></div>
+</section>
+<nav class="sm hide" id="sm" aria-label="Start menu"><header>EECE 30</header><div id="smlist"></div></nav>
+<div class="tb">
+  <button class="start" id="start" aria-expanded="false">✜ start</button>
+  <div class="task">EECE 30 – Official Pages</div>
+  <div class="tray" id="clock"></div>
+</div>
+
+<script>
+// ✏️ Put your real page links in "url".
+const LINKS = [
+  {n:"Timetable", g:"", c:"", url:"#", act:"tt"},
+  {n:"Drive Folder", g:"", c:"", url:"https://drive.google.com/drive/folders/1BnABwki4_eeAaLGJd6rfrhcHBbhJ29lL"},
+  {n:"Facebook",  g:"f",  c:"#1877f2", url:"https://www.facebook.com/share/1DGRLFvW83/"},
+  {n:"TikTok",    g:"♪",  c:"#111111", url:"https://www.tiktok.com/@eece.30?_r=1&_t=ZS-9BHw8OzHhjx"},
+  {n:"Instagram", g:"◎",  c:"linear-gradient(45deg,#f9a03f,#e1306c 55%,#833ab4)", url:"https://www.instagram.com/eece_30?srtk=MTEwNGFxNDljYzVuZg=="},
+  {n:"YouTube",   g:"▶",  c:"#e00000", url:"https://youtube.com/@eece30?si=hVENfFMaH10TbtGO"},
+  {n:"Discord",   g:"#",  c:"#5865f2", url:"#", soon:true},
+  {n:"Dino Game", g:"", c:"", url:"#", act:"dino"}
+];
+const TT = 'M17.5 6h3.6c.3 2.6 1.9 4.2 4.4 4.5v3.7c-1.6 0-3.1-.5-4.4-1.4v6.2c0 3.8-3 6.7-6.8 6.7s-6.5-2.9-6.5-6.4 3-6.5 6.6-6.5c.4 0 .7 0 1.1.1v3.8c-.3-.1-.6-.1-.9-.1-1.4 0-2.5 1.1-2.5 2.5s1.1 2.5 2.5 2.5 2.6-1.1 2.6-2.8z';
+const FR = (c) => '<rect x="2.5" y="2.5" width="27" height="27" fill="' + c + '" stroke="#000"/><path d="M3 29V3h26" fill="none" stroke="#fff" opacity=".55"/><path d="M29 3v26H3" fill="none" stroke="#000" opacity=".3"/>';
+const DINO_BODY = [
+  '.............#######.',
+  '............##.######',
+  '............#########',
+  '............#########',
+  '............####.....',
+  '............########.',
+  '#...........######...',
+  '#..........########..',
+  '##........##########.',
+  '###......############',
+  '####....#############',
+  '.###################.',
+  '..#################..',
+  '...###############...',
+  '....#############....',
+  '.....###########.....'
+];
+const LEGS_A = ['......###....###.....', '......###....#.......', '......##.....###.....'];
+const LEGS_B = ['......###....###.....', '......#.....###......', '......###....##......'];
+const DINO_SVG = '<g fill="#535353">' + DINO_BODY.concat(LEGS_A).map((r, j) => [...r].map((ch, i) => ch === '#' ? '<rect x="' + (i + 5.5) + '" y="' + (j + 7) + '" width="1" height="1"/>' : '').join('')).join('') + '</g><rect x="3" y="26.500" width="26" height="1" fill="#535353"/>';
+const ICONS = {
+  "Drive Folder": '<path d="M3.500 8.500h9l3 3h13v16h-25z" fill="#f4c542" stroke="#000"/><path d="M4 14.500h24" stroke="#fff" opacity=".6" fill="none"/><path d="M16 17l5 8.500h-10z" fill="#1e8e3e" stroke="#000"/><path d="M16 17l-5 8.500" stroke="#1a73e8" stroke-width="1.500" fill="none"/>',
+  "Dino Game": FR('#f7f7f7') + DINO_SVG,
+  "Timetable": '<rect x="3.500" y="5.500" width="25" height="23" fill="#fff" stroke="#000"/><rect x="3.500" y="5.500" width="25" height="6" fill="#d82020" stroke="#000"/><path d="M4 17h24M4 23h24M12 12v16M20 12v16" stroke="#8a8a8a" fill="none"/><rect x="13" y="18" width="6" height="5" fill="#316ac5"/><path d="M9 3v5M23 3v5" stroke="#000" stroke-width="2"/>',
+  "Facebook": FR('#3b5998') + '<path d="M17 27V17h3.5l.6-4H17v-2.2c0-1.2.4-2 2-2h2V5.3C20.7 5.2 19.6 5 18.3 5 15.4 5 13 6.8 13 10.4V13H9.5v4H13v10z" fill="#fff"/>',
+  "TikTok": FR('#111') + '<path d="' + TT + '" fill="#25f4ee" transform="translate(-1 -1)"/><path d="' + TT + '" fill="#fe2c55" transform="translate(1 1)"/><path d="' + TT + '" fill="#fff"/>',
+  "Instagram": FR('#e1306c') + '<rect x="3" y="3" width="26" height="7" fill="#833ab4"/><rect x="3" y="22" width="26" height="7" fill="#f9a03f"/><rect x="8" y="8" width="16" height="16" rx="4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="none" stroke="#fff" stroke-width="2"/><rect x="20" y="10" width="2" height="2" fill="#fff"/>',
+  "YouTube": '<path d="M10 7L7 3M20 7l3-4" stroke="#000" fill="none"/><rect x="2.5" y="7.5" width="27" height="19" fill="#c8c3b0" stroke="#000"/><rect x="5.5" y="10.5" width="17" height="13" fill="#e00000" stroke="#000"/><path d="M11 13l8 4.500-8 4.500z" fill="#fff"/><rect x="24.500" y="12" width="3" height="3" fill="#000"/><rect x="24.500" y="18" width="3" height="3" fill="#000"/>',
+  "Discord": '<path d="M5 10c2-2 5-3 11-3s9 1 11 3l2 13c-1.500 1.500-4 2.500-6 2.500l-1.500-3c-3 .8-6 .8-9 0L10 25.500c-2 0-4.500-1-6-2.500z" fill="#5865f2" stroke="#000"/><circle cx="12" cy="17" r="2.800" fill="#fff" stroke="#000"/><circle cx="20" cy="17" r="2.800" fill="#fff" stroke="#000"/><circle cx="12" cy="17.500" r="1" fill="#000"/><circle cx="20" cy="17.500" r="1" fill="#000"/>'
+};
+const ARROW = '<rect x="1.500" y="21.500" width="10" height="10" fill="#fff" stroke="#000"/><path d="M4 29l5-5M5.500 24H9v3.500" fill="none" stroke="#1d54c8" stroke-width="1.600"/>';
+const icon = (n, arrow) => '<svg viewBox="0 0 32 32" shape-rendering="crispEdges" aria-hidden="true">' + (ICONS[n] || '') + (arrow ? ARROW : '') + '</svg>';
+const list = document.getElementById('list'), sml = document.getElementById('smlist');
+LINKS.forEach(l=>{
+  const a = document.createElement('a');
+  a.className = 'item'; a.href = l.url; a.target = '_blank'; a.rel = 'noopener';
+  a.innerHTML = '<div class="i"></div><span class="l"></span>';
+  a.querySelector('.i').innerHTML = icon(l.n, true);
+  a.querySelector('.l').textContent = l.n; list.appendChild(a);
+  const b = document.createElement('a');
+  b.href = l.url; b.target = '_blank'; b.rel = 'noopener';
+  b.innerHTML = '<i></i><span></span>';
+  b.querySelector('i').innerHTML = icon(l.n, false);
+  b.querySelector('span').textContent = l.n; sml.appendChild(b);
+});
+document.getElementById('count').textContent = LINKS.length + ' object(s)';
+const dlg = document.getElementById('dlg'), sm = document.getElementById('sm'), st = document.getElementById('start');
+document.querySelectorAll('[data-ok]').forEach(b=>b.onclick=()=>dlg.classList.add('hide'));
+const show = (t,m,i)=>{
+  document.getElementById('dt').textContent = t; document.getElementById('dm').textContent = m;
+  const e = document.getElementById('de'); e.textContent = i;
+  e.style.background = i === '!' ? 'radial-gradient(circle at 35% 30%,#fff3a0,#f2b705 60%)' : '';
+  e.style.color = i === '!' ? '#000' : '';
+  dlg.classList.remove('hide');
+};
+document.getElementById('close').onclick = ()=>show('Midterms','Task failed successfully.','✕');
+LINKS.forEach((l,k)=>{ if(l.soon){ [list.children[k], sml.children[k]].forEach(el=>{
+  el.removeAttribute('target');
+  el.addEventListener('click', ev=>{ ev.preventDefault(); show(l.n,'This page is under construction.','!'); });
+}); } });
+st.onclick = ()=>{const h = sm.classList.toggle('hide'); st.setAttribute('aria-expanded', String(!h));};
+document.addEventListener('click', e=>{ if(!e.target.closest('#sm,#start')){sm.classList.add('hide'); st.setAttribute('aria-expanded','false');} });
+const clock = document.getElementById('clock');
+const tick = ()=>{clock.textContent = new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});};
+tick(); setInterval(tick, 20000);
+
+// ---- Menus, timetable, subjects, help ----
+const SHEET = 'https://docs.google.com/spreadsheets/d/1AksjD-a1YRJ6VrysqP64xjpPtOkoXOJaBqlCr4LnrOU/edit?usp=drivesdk';
+const VIDEO = 'https://drive.google.com/file/d/10d_kO3cHb4SDMtfP5eSQIQTYmoQYtdQ8/view?usp=drivesdk';
+const VIDEO_EMBED = 'https://drive.google.com/file/d/10d_kO3cHb4SDMtfP5eSQIQTYmoQYtdQ8/preview';
+const COURSES = {
+  EECG111:['Fundamentals of Circuits',3], EECG141:['Logic Circuits',3], EECG171:['Measurements and Labs',2],
+  GENG005:['Writing and Presentation Skills',2], GENG118:['Principles of Economics',2],
+  MTHG102:['Linear Algebra and Multivariable Integration',3], PHYG102:['Modern Physics',3]
+};
+const DAYS = ['Sunday','Monday','Tuesday','Wednesday'];
+// [day, time, code, type, room, note] copied from the EECE 1st Year Schedules sheet
+const SCHEDULE = [
+  // [day, time, code, type, room, note, section]
+  [0,'08:00–08:50','EECG111','Lecture','8309-182','1/2*',''],
+  [0,'10:00–10:50','GENG118','Lecture','8309-182','',''],
+  [0,'12:00–12:50','EECG111','Lecture','8310-300','',''],
+  [0,'02:00–02:50','EECG171','Lab','','','1'],
+  [1,'08:00–08:50','GENG005','Lecture','8309-182','',''],
+  [1,'10:00–11:50','PHYG102','Tutorial','8310-300','','1'],
+  [1,'10:00–11:50','EECG141','Tutorial','19208-80','','2'],
+  [1,'12:00–01:50','EECG111','Tutorial','17202-148','','1'],
+  [1,'12:00–01:50','PHYG102','Tutorial','19208-80','','2'],
+  [1,'02:00–03:50','EECG141','Tutorial','8209-102','','1'],
+  [1,'02:00–02:50','EECG171','Lab','','','2'],
+  [2,'08:00–08:50','MTHG102','Lecture','20106-240','',''],
+  [2,'10:00–10:50','PHYG102','Lecture','8310-300','',''],
+  [2,'12:00–12:50','PHYG102','Lecture','8310-300','1/2*',''],
+  [2,'01:00–01:50','EECG171','Lecture','8310-300','1/2*',''],
+  [2,'02:00–03:50','MTHG102','Tutorial','8209-102','',''],
+  [3,'08:00–09:50','EECG111','Tutorial','8208-300','','2'],
+  [3,'10:00–01:50','EECG141','Lecture','8208-300','4 hours','']
+];
+const pw = document.getElementById('pw'), pt = document.getElementById('pt'), pb = document.getElementById('pb');
+const stat = document.querySelector('.status');
+const panel = (title, html) => { pt.textContent = title; pb.innerHTML = html; pw.classList.remove('hide'); };
+document.getElementById('pclose').onclick = () => pw.classList.add('hide');
+const sheetLink = '<a class="plink" href="' + SHEET + '" target="_blank" rel="noopener">Open the original sheet</a>';
+let sec = '1';
+try { sec = localStorage.getItem('eece30sec') || '1'; } catch (e) {}
+const mine = r => r[6] === '' || r[6] === sec;
+const secButtons = () => '<div class="tabs" aria-label="Section">' + [['1','Section A1'],['2','Section A2']].map(x =>
+  '<button data-s="' + x[0] + '" class="' + (x[0] === sec ? 'on' : '') + '">' + x[1] + '</button>').join('') + '</div>';
+function bindSec(again){
+  pb.querySelectorAll('[data-s]').forEach(b => b.onclick = () => {
+    sec = b.dataset.s; try { localStorage.setItem('eece30sec', sec); } catch (e) {}
+    again();
+  });
+}
+const warn = '<p class="note" style="background:#ffffe1;border:1px solid #000;padding:6px 8px;margin:0 0 10px;color:#000"><b>Note:</b> Don’t rely on this timetable. It may change, so check the original <a href="' + SHEET + '" target="_blank" rel="noopener" style="color:#0000ee">Google Sheet</a>.</p>';
+const secNote = '<p class="note">A1 is section EECE1A-01 and A2 is EECE1A-02. Slots marked “Confirm on sheet” were unclear in the sheet’s layout, and 1/2* is the sheet’s own mark.</p>';
+function openTimetable(d){
+  if (d === undefined) { d = new Date().getDay(); if (d > 3) d = 0; }
+  const rows = SCHEDULE.filter(r => r[0] === d && mine(r));
+  let h = warn + secButtons() + '<div class="tabs">' + DAYS.map((n,i) => '<button data-d="' + i + '" class="' + (i === d ? 'on' : '') + '">' + n.slice(0,3) + '</button>').join('') + '</div>';
+  h += '<table class="tt"><tr><th>Time</th><th>Class</th><th>Room</th></tr>' + (rows.length ? rows.map(r =>
+    '<tr><td>' + r[1] + '</td><td><b>' + r[2] + '</b> ' + COURSES[r[2]][0] + '<br>' + r[3] + (r[5] ? ' · ' + r[5] : '') + '</td><td>' + (r[4] || '–') + '</td></tr>').join('')
+    : '<tr><td colspan="3">No classes.</td></tr>') + '</table>' + secNote + sheetLink;
+  panel('Timetable – ' + DAYS[d], h);
+  pb.querySelectorAll('[data-d]').forEach(b => b.onclick = () => openTimetable(+b.dataset.d));
+  bindSec(() => openTimetable(d));
+}
+function openCourse(code){
+  const c = COURSES[code], rows = SCHEDULE.filter(r => r[2] === code && mine(r));
+  const h = warn + secButtons() + '<p><b>' + code + '</b><br>' + c[0] + '<br>Credit hours: ' + c[1] + '</p><table class="tt"><tr><th>Day</th><th>Time</th><th>Type</th><th>Room</th></tr>' +
+    rows.map(r => '<tr><td>' + DAYS[r[0]] + '</td><td>' + r[1] + '</td><td>' + r[3] + (r[5] ? ' · ' + r[5] : '') + '</td><td>' + (r[4] || '–') + '</td></tr>').join('') + '</table>' + secNote + sheetLink;
+  panel(c[0] + ' Properties', h);
+  bindSec(() => openCourse(code));
+}
+function openVideo(){
+  panel('Windows Media Player', '<iframe src="' + VIDEO_EMBED + '" width="100%" height="300" allow="autoplay" title="EECE 30 video" style="border:2px inset #fff;background:#000"></iframe><br><a class="plink" href="' + VIDEO + '" target="_blank" rel="noopener">Video not loading? Open it in Google Drive</a>');
+}
+function openAbout(){
+  panel('About EECE 30', '<p><b>EECE 30 – Official Pages</b></p><p>All of our pages in one place: Facebook, TikTok, Instagram and YouTube. Discord is coming soon.</p><p>Use Favorites for subject info, and View for the timetable.</p>');
+}
+const DRIVE = 'https://drive.google.com/drive/folders/1BnABwki4_eeAaLGJd6rfrhcHBbhJ29lL';
+let gameJump = null;
+document.addEventListener('keydown', e => { if (gameJump && (e.code === 'Space' || e.code === 'ArrowUp')) { e.preventDefault(); gameJump(); } });
+function openGame(){
+  const mobile = window.innerWidth < 640;
+  const W = mobile ? 360 : 600, H = mobile ? 320 : 200, GY = H - 34, S = 2, INK = '#535353';
+  panel('Dino Run', '<canvas id="gc" width="' + W + '" height="' + H + '" style="width:100%;display:block;background:#f7f7f7;border:2px inset #fff;touch-action:none" aria-label="Dino game"></canvas><p class="note">Press Space or tap the game to jump. It gets faster and harder as you score: bigger cactus groups, then birds at different heights.</p>');
+  const cv = document.getElementById('gc'), c = cv.getContext('2d');
+  const clouds = [{ x: 60, y: 50, w: 44 }, { x: 230, y: 90, w: 34 }, { x: 390, y: 40, w: 50 }];
+  let state = 'ready', frame = 0, scroll = 0, speed = 5, y = 0, vy = 0, obs = [], next = 300, score = 0, hi = 0, last = 0;
+  try { hi = +localStorage.getItem('eece30hi') || 0; } catch (e) {}
+  const pad = n => String(n).padStart(5, '0');
+  function reset(){ frame = 0; scroll = 0; speed = 5; y = 0; vy = 0; obs = []; next = 300; score = 0; }
+  function jump(){
+    if (state === 'over') { reset(); state = 'run'; return; }
+    if (state === 'ready') state = 'run';
+    if (y === 0) vy = -11.5;
+  }
+  gameJump = jump;
+  cv.addEventListener('pointerdown', e => { e.preventDefault(); jump(); });
+  const alive = () => document.getElementById('gc') === cv && !pw.classList.contains('hide');
+  function bits(rows, x, ty){ rows.forEach((r, j) => { for (let i = 0; i < r.length; i++) if (r[i] === '#') c.fillRect(x + i * S, ty + j * S, S, S); }); }
+  function spawn(){
+    const bird = score > 120 && Math.random() < Math.min(0.45, 0.15 + score / 1500);
+    if (bird) {
+      const bot = Math.random() < 0.5 ? GY - 12 : GY - 48;
+      obs.push({ type: 'bird', x: W + 10, w: 28, top: bot - 16, bot: bot, v: 1.5 });
+    } else {
+      const n = score > 300 && Math.random() < 0.4 ? 3 : (score > 100 && Math.random() < 0.45 ? 2 : 1);
+      for (let k = 0; k < n; k++) {
+        const h = 30 + Math.floor(Math.random() * 22);
+        obs.push({ type: 'cactus', x: W + 10 + k * 22, w: 18, top: GY - h, bot: GY, v: 0 });
+      }
+    }
+    next = 150 + speed * 14 + Math.random() * 200;
+  }
+  function update(dt){
+    if (state !== 'run') return;
+    frame += dt; scroll += speed * dt; speed = Math.min(16, 5 + frame / 300);
+    vy += 0.65 * dt; y += vy * dt; if (y >= 0) { y = 0; vy = 0; }
+    next -= speed * dt; if (next <= 0) spawn();
+    obs.forEach(o => o.x -= (speed + o.v) * dt); obs = obs.filter(o => o.x > -40);
+    score = Math.floor(frame / 6);
+    const dx = 46, dw = 30, dy = GY - 36 + y, dh = 34;
+    for (const o of obs) {
+      if (dx < o.x + o.w - 2 && dx + dw > o.x + 2 && dy + dh > o.top && dy < o.bot) {
+        state = 'over';
+        if (score > hi) { hi = score; try { localStorage.setItem('eece30hi', String(hi)); } catch (e) {} }
+      }
+    }
+  }
+  function draw(){
+    c.clearRect(0, 0, W, H);
+    c.fillStyle = '#d0d0d0';
+    clouds.forEach(k => { const m = W + 80, x = (((k.x - scroll * 0.15) % m) + m) % m - 40; c.fillRect(x, k.y, k.w, 8); c.fillRect(x + 8, k.y - 6, k.w - 18, 6); });
+    c.fillStyle = INK;
+    c.fillRect(0, GY, W, 1);
+    for (let i = 0; i < 9; i++) c.fillRect((((i * 83 - scroll) % W) + W) % W, GY + 6 + (i % 3) * 4, 4 + (i % 2) * 3, 1);
+    obs.forEach(o => {
+      const x = o.x, t = o.top;
+      if (o.type === 'bird') {
+        c.fillRect(x + 6, t + 5, 18, 6); c.fillRect(x, t + 6, 6, 3); c.fillRect(x + 24, t + 7, 4, 3);
+        if (Math.floor(frame / 8) % 2) c.fillRect(x + 10, t - 2, 6, 7); else c.fillRect(x + 10, t + 11, 6, 7);
+      } else {
+        const h = o.bot - o.top;
+        c.fillRect(x + 5, t, 8, h); c.fillRect(x, t + 14, 6, 4); c.fillRect(x, t + 8, 3, 10); c.fillRect(x + 13, t + 18, 5, 4); c.fillRect(x + 15, t + 12, 3, 10);
+      }
+    });
+    const legs = (state === 'run' && y === 0 && Math.floor(frame / 6) % 2) ? LEGS_B : LEGS_A;
+    bits(DINO_BODY, 40, GY - 38 + y); bits(legs, 40, GY - 38 + y + DINO_BODY.length * S);
+    c.font = '16px "Courier New", monospace'; c.textAlign = 'right';
+    c.fillText('HI ' + pad(hi) + '  ' + pad(score), W - 10, 24);
+    c.textAlign = 'left'; c.fillText('LV ' + (Math.floor(score / 100) + 1), 10, 24);
+    c.textAlign = 'center';
+    if (state === 'ready') c.fillText('Press Space or tap to start', W / 2, H * 0.35);
+    if (state === 'over') { c.font = 'bold 20px "Courier New", monospace'; c.fillText('G A M E   O V E R', W / 2, H * 0.3); c.font = '14px "Courier New", monospace'; c.fillText('Press Space or tap to restart', W / 2, H * 0.3 + 26); }
+  }
+  function tick(t){
+    if (!alive()) { if (gameJump === jump) gameJump = null; return; }
+    const dt = Math.min(3, (t - last) / 16.667 || 1); last = t;
+    update(dt); draw(); requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+function copyText(t, m){
+  const bad = () => show('EECE 30', 'Could not copy. Copy it manually instead.', '!');
+  if (!navigator.clipboard) return bad();
+  navigator.clipboard.writeText(t).then(() => show('EECE 30', m, '!'), bad);
+}
+function copySel(){
+  const urls = [...list.children].map((el,i) => el.classList.contains('sel') && LINKS[i].url !== '#' ? LINKS[i].url : null).filter(Boolean);
+  if (!urls.length) return show('EECE 30', 'Select icons first: Edit > Select All.', '!');
+  copyText(urls.join('\n'), urls.length + ' link(s) copied.');
+}
+let mode = 'large', statusOn = true;
+const setMode = m => { mode = m; list.className = 'list' + (m === 'small' ? ' small' : m === 'list' ? ' det' : ''); };
+const each = f => [...list.children].forEach(f);
+const MENUS = {
+  File: () => [
+    ['Open Timetable in Google Sheets', null, SHEET],
+    ['Open Drive Folder', null, DRIVE],
+    ['Play Dino Game', () => openGame()],
+    ['Copy Page Link', () => copyText(location.href, 'Page link copied.')],
+    ['Print…', () => window.print()], '-',
+    ['Close', () => show('Midterms', 'Task failed successfully.', '✕')]
+  ],
+  Edit: () => [
+    ['Select All', () => each(i => i.classList.add('sel'))],
+    ['Invert Selection', () => each(i => i.classList.toggle('sel'))],
+    ['Clear Selection', () => each(i => i.classList.remove('sel'))], '-',
+    ['Copy Selected Links', copySel]
+  ],
+  View: () => [
+    [(mode === 'large' ? '✓ ' : '') + 'Large Icons', () => setMode('large')],
+    [(mode === 'small' ? '✓ ' : '') + 'Small Icons', () => setMode('small')],
+    [(mode === 'list' ? '✓ ' : '') + 'List', () => setMode('list')], '-',
+    [(statusOn ? '✓ ' : '') + 'Status Bar', () => { statusOn = !statusOn; stat.classList.toggle('off', !statusOn); }],
+    ['Timetable…', () => openTimetable()], '-',
+    ['Refresh', () => { list.style.visibility = 'hidden'; setTimeout(() => list.style.visibility = '', 250); }]
+  ],
+  Favorites: () => [...Object.keys(COURSES).map(k => [k + ' – ' + COURSES[k][0], () => openCourse(k)]), '-', ['Timetable…', () => openTimetable()]],
+  Help: () => [['Watch Video…', openVideo], ['About EECE 30', openAbout]]
+};
+const bar = document.getElementById('menubar');
+let dd = null;
+function closeDD(){ if (dd) { dd.remove(); dd = null; } bar.querySelectorAll('button[data-m]').forEach(b => b.setAttribute('aria-expanded', 'false')); }
+bar.addEventListener('click', e => {
+  const b = e.target.closest('button[data-m]'); if (!b) return;
+  const same = b.getAttribute('aria-expanded') === 'true'; closeDD(); if (same) return;
+  b.setAttribute('aria-expanded', 'true');
+  dd = document.createElement('div'); dd.className = 'dd';
+  dd.style.left = b.offsetLeft + 'px'; dd.style.top = (b.offsetTop + b.offsetHeight) + 'px';
+  MENUS[b.dataset.m]().forEach(it => {
+    if (it === '-') { dd.appendChild(document.createElement('hr')); return; }
+    let x;
+    if (it[2]) { x = document.createElement('a'); x.href = it[2]; x.target = '_blank'; x.rel = 'noopener'; x.onclick = () => setTimeout(closeDD, 0); }
+    else { x = document.createElement('button'); x.onclick = () => { closeDD(); it[1](); }; }
+    x.textContent = it[0];
+    dd.appendChild(x);
+  });
+  bar.appendChild(dd);
+  const over = dd.getBoundingClientRect().right - (window.innerWidth - 6);
+  if (over > 0) dd.style.left = Math.max(0, b.offsetLeft - over) + 'px';
+});
+document.addEventListener('click', e => { if (!e.target.closest('#menubar')) closeDD(); });
+const ACTS = { tt: () => openTimetable(), dino: () => openGame() };
+LINKS.forEach((l,k) => { if (ACTS[l.act]) [list.children[k], sml.children[k]].forEach(el => { el.removeAttribute('target'); el.addEventListener('click', ev => { ev.preventDefault(); ACTS[l.act](); }); }); });
+document.getElementById('ttq').onclick = e => { e.preventDefault(); openTimetable(); };
+</script>
+</body>
+</html>
